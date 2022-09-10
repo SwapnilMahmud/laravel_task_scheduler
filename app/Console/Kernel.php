@@ -7,6 +7,11 @@ use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        Commands\StockScheduler::class,
+        Commands\WordOfTheDay::class,
+    ];
+    
     /**
      * Define the application's command schedule.
      *
@@ -15,7 +20,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('daily:lowstock_report')->cron('0 18 * * *'); 
+        $schedule->command('daily:lowstock_report')->everyMinute(); 
+        $schedule->command('word:day')->daily();
     }
 
     /**
